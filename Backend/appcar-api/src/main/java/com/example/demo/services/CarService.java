@@ -10,11 +10,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.DAO.CarDAO;
 import com.example.demo.models.Car;
-import com.example.demo.repositories.CarRepository;
+import com.example.demo.queries.CarQueries;
 
 @Component
-public class CarService implements CarRepository {
+public class CarService implements CarDAO {
 	
 	private static final Logger log = LoggerFactory.getLogger(CarService.class);
 	private JdbcTemplate jdcbTemplate;
@@ -37,38 +38,33 @@ public class CarService implements CarRepository {
 	@Override
 	public List<Car> getCars() {
 		
-		String sql = "SELECT * FROM cars WHERE available = true";
-		
-		return jdcbTemplate.query(sql, rowMapper);
+		return jdcbTemplate.query(CarQueries.allCars, rowMapper);
 		
 	}
 
 	@Override
 	public List<Car> getCars(boolean ascendent) {
-		String sql = "SELECT * FROM cars WHERE available = true ORDER BY price ";
+		
 		if (ascendent) {
-			sql += "ASC";
+			return jdcbTemplate.query(CarQueries.CarsAsc, rowMapper);
 		} else {
-			sql += "DESC";
+			return jdcbTemplate.query(CarQueries.CarsDesc, rowMapper);
 		}
 		
-		return jdcbTemplate.query(sql, rowMapper);
 	}
 
 	@Override
 	public List<Car> getCars(String type) {
-		String sql = "SELECT * FROM cars WHERE available = true AND type_car = ?";
 		
-		return jdcbTemplate.query(sql, rowMapper, type);
+		return jdcbTemplate.query(CarQueries.CarsType, rowMapper, type);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public Optional<Car> getCar(Long id) {
-		String sql = "SELECT * FROM cars WHERE id = ?";
 		Car car = null;
 		try {
-			car = jdcbTemplate.queryForObject(sql, new Object[]{id}, rowMapper);
+			car = jdcbTemplate.queryForObject(CarQueries.CarId, new Object[]{id}, rowMapper);
 		} catch (DataAccessException ex) {
 			log.info("Car not found");
 		}
@@ -77,19 +73,16 @@ public class CarService implements CarRepository {
 
 	@Override
 	public List<Car> getCars(boolean ascendent, String type) {
-		String sql = "SELECT * FROM cars WHERE available = true AND type_car = ? ORDER BY price ";
 		if (ascendent) {
-			sql += "ASC";
+			return jdcbTemplate.query(CarQueries.CarsTypeAsc, rowMapper, type);
 		} else {
-			sql += "DESC";
+			return jdcbTemplate.query(CarQueries.CarsTypeDesc, rowMapper, type);
 		}
-		return jdcbTemplate.query(sql, rowMapper, type);
 	}
 
 	@Override
 	public void setAvailable(boolean available, Long id) {
-		String sql = "UPDATE cars SET available = ? WHERE id = ?";
-		jdcbTemplate.update(sql, available, id);
+		jdcbTemplate.update(CarQueries.setAvailable, available, id);
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -21,28 +22,28 @@ public class Order {
 		this.id = id;
 	}
 
-	public Long getId_car() {
-		return id_car;
+	public Long getIdCar() {
+		return idCar;
 	}
 
-	public void setId_car(Long id_car) {
-		this.id_car = id_car;
+	public void setIdCar(Long idCar) {
+		this.idCar = idCar;
 	}
 
-	public String getDate_start() {
-		return date_start;
+	public String getDateStart() {
+		return dateStart;
 	}
 
-	public void setDate_start(String date_start) {
-		this.date_start = date_start;
+	public void setDateStart(String dateStart) {
+		this.dateStart = dateStart;
 	}
 
-	public String getDate_end() {
-		return date_end;
+	public String getDateEnd() {
+		return dateEnd;
 	}
 
-	public void setDate_end(String date_end) {
-		this.date_end = date_end;
+	public void setDateEnd(String dateEnd) {
+		this.dateEnd = dateEnd;
 	}
 
 	public boolean isDelivered() {
@@ -69,27 +70,30 @@ public class Order {
 		this.amount = amount;
 	}
 
-	public String getName_user() {
-		return name_user;
+	public String getNameUser() {
+		return nameUser;
 	}
 
-	public void setName_user(String name_user) {
-		this.name_user = name_user;
+	public void setNameUser(String nameUser) {
+		this.nameUser = nameUser;
 	}
 
-	public String getEmail_user() {
-		return email_user;
+	public String getEmailUser() {
+		return emailUser;
 	}
 
-	public void setEmail_user(String email_user) {
-		this.email_user = email_user;
+	public void setEmailUser(String emailUser) {
+		this.emailUser = emailUser;
 	}
 
-	private Long id_car;
+	@Column(name = "id_car")
+	private Long idCar;
 	
-	private String date_start = LocalDate.now().toString();
+	@Column(name = "date_start")
+	private String dateStart = LocalDate.now().toString();
 	
-	private String date_end = LocalDate.now().plusDays(this.days).toString();;
+	@Column(name = "date_end")
+	private String dateEnd = LocalDate.now().plusDays(this.days).toString();;
 	
 	private boolean delivered = false;
 	
@@ -97,34 +101,36 @@ public class Order {
 	
 	private double amount;
 	
-	private String name_user;
+	@Column(name = "name_user")
+	private String nameUser;
 	
-	private String email_user;
+	@Column(name = "email_user")
+	private String emailUser;
 
-	public Order(Long id, Long id_car, String date_start, String date_end, boolean delivered, int days, double amount,
-			String name_user, String email_user) {
+	public Order(Long id, Long idCar, String dateStart, String dateEnd, boolean delivered, int days, double amount,
+			String nameUser, String emailUser) {
 		this.id = id;
-		this.id_car = id_car;
-		this.date_start = date_start;
-		this.date_end = date_end;
+		this.idCar = idCar;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
 		this.delivered = delivered;
 		this.days = days;
 		this.amount = amount;
-		this.name_user = name_user;
-		this.email_user = email_user;
+		this.nameUser = nameUser;
+		this.emailUser = emailUser;
 	}
 	
 	public Order() {
 		
 	}
 
-	public Order(Long id_car, int days, double amount, String name_user, String email_user) {
-		this.id_car = id_car;
-		this.date_end = LocalDate.now().plusDays(days).toString();
+	public Order(Long idCar, int days, double amount, String nameUser, String emailUser) {
+		this.idCar = idCar;
+		this.dateEnd = LocalDate.now().plusDays(days).toString();
 		this.days = days;
 		this.amount = amount;
-		this.name_user = name_user;
-		this.email_user = email_user;
+		this.nameUser = nameUser;
+		this.emailUser = emailUser;
 	}
 	
 	

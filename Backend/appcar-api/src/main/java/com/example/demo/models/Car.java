@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,13 +12,15 @@ public class Car {
 	@Id
 	private Long id;
 	
-	private String name_car;
+	@Column(name = "name_car")
+	private String nameCar;
 	
 	private double price;
 	
 	private String img;
 	
-	private String type_car;
+	@Column(name = "type_car")
+	private String typeCar;
 	
 	private boolean available;
 	
@@ -30,11 +33,11 @@ public class Car {
 	}
 
 	public String getName_car() {
-		return name_car;
+		return nameCar;
 	}
 
-	public void setName_car(String name_car) {
-		this.name_car = name_car;
+	public void setName_car(String nameCar) {
+		this.nameCar = nameCar;
 	}
 
 	public double getPrice() {
@@ -54,11 +57,11 @@ public class Car {
 	}
 
 	public String getType_car() {
-		return type_car;
+		return typeCar;
 	}
 
-	public void setType_car(String type_car) {
-		this.type_car = type_car;
+	public void setType_car(String typeCar) {
+		this.typeCar = typeCar;
 	}
 
 	public boolean isAvailable() {
@@ -69,13 +72,13 @@ public class Car {
 		this.available = available;
 	}
 
-	public Car(Long id, String name_car, double price, String img, String type_car, boolean available) {
+	public Car(Long id, String nameCar, double price, String img, String typeCar, boolean available) {
 		super();
 		this.id = id;
-		this.name_car = name_car;
+		this.nameCar = nameCar;
 		this.price = price;
 		this.img = img;
-		this.type_car = type_car;
+		this.typeCar = typeCar;
 		this.available = available;
 	}
 	
