@@ -10,44 +10,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Dao.DaoImpl.OrderDaoImpl;
 import com.example.demo.models.Order;
-import com.example.demo.services.OrderService;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
 
 	@Autowired
-	OrderService orderService;
+	OrderDaoImpl orderDaoImpl;
 	
 	@PostMapping()
 	public Order createOrder(@RequestBody Order order) {
-		return orderService.createOrder(order);
+		return orderDaoImpl.createOrder(order);
 	}
 	
 	@GetMapping()
 	public Optional<Order> getOrder(@RequestParam Long id, @RequestParam String email) {
-		return orderService.getOrder(id, email);
+		return orderDaoImpl.getOrder(id, email);
 	}
 	
 	@GetMapping("/order")
 	public Optional<Order> getOrder(@RequestParam String email) {
-		return orderService.getOrder(email);
+		return orderDaoImpl.getOrder(email);
 	}
 	
 	@GetMapping("/caducated")
 	public boolean isCaducated(@RequestParam String end) {
-		return orderService.isCaducated(end);
+		return orderDaoImpl.isCaducated(end);
 	}
 	
 	@GetMapping("/id")
 	public Optional<Order> getOrder(@RequestParam Long id) {
-		return orderService.getOrder(id);
+		return orderDaoImpl.getOrder(id);
 	}
 	
 	@PostMapping("/delivered")
 	public void setDelivered(@RequestParam boolean delivered, @RequestParam Long id) {
-		orderService.setDelivered(delivered, id);
+		orderDaoImpl.setDelivered(delivered, id);
 	}
 	
 }

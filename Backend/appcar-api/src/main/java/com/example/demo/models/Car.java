@@ -32,11 +32,11 @@ public class Car {
 		this.id = id;
 	}
 
-	public String getName_car() {
+	public String getNameCar() {
 		return nameCar;
 	}
 
-	public void setName_car(String nameCar) {
+	public void setNameCar(String nameCar) {
 		this.nameCar = nameCar;
 	}
 
@@ -56,11 +56,11 @@ public class Car {
 		this.img = img;
 	}
 
-	public String getType_car() {
+	public String getTypeCar() {
 		return typeCar;
 	}
 
-	public void setType_car(String typeCar) {
+	public void setTypeCar(String typeCar) {
 		this.typeCar = typeCar;
 	}
 

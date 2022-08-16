@@ -1,11 +1,11 @@
-package com.example.demo.DAO;
+package com.example.demo.Dao;
 
 // import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.models.Order;
 
-public interface OrderDAO {
+public interface OrderDao {
 	
 	Order createOrder(Order order);
 	

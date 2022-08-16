@@ -1,4 +1,4 @@
-package com.example.demo.services;
+package com.example.demo.Dao.DaoImpl;
 
 import java.time.LocalDate;
 // import java.util.List;
@@ -11,24 +11,24 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.DAO.OrderDAO;
+import com.example.demo.Dao.OrderDao;
 import com.example.demo.models.Order;
 import com.example.demo.queries.OrderQueries;
 
 @Component
-public class OrderService implements OrderDAO {
+public class OrderDaoImpl implements OrderDao {
 
-	private static final Logger log = LoggerFactory.getLogger(CarService.class);
+	private static final Logger log = LoggerFactory.getLogger(CarDaoImpl.class);
 	private JdbcTemplate jdcbTemplate;
 	
-	public OrderService(JdbcTemplate jdcbTemplate) {
+	public OrderDaoImpl(JdbcTemplate jdcbTemplate) {
 		this.jdcbTemplate = jdcbTemplate;
 	}
 	
 	@Override
 	public Order createOrder(Order order) {
 		
-		jdcbTemplate.update(OrderQueries.createOrder, order.getIdCar(), order.getDateStart(), LocalDate.parse(order.getDateStart()).plusDays(order.getDays()).toString(), order.isDelivered(), order.getDays(), order.getAmount(), order.getNameUser(), order.getEmailUser());
+		jdcbTemplate.update(OrderQueries.CREATE_ORDER, order.getIdCar(), order.getDateStart(), LocalDate.parse(order.getDateStart()).plusDays(order.getDays()).toString(), order.isDelivered(), order.getDays(), order.getAmount(), order.getNameUser(), order.getEmailUser());
 		return order;
 	}
 	
@@ -51,7 +51,7 @@ public class OrderService implements OrderDAO {
 	public Optional<Order> getOrder(Long id, String email) {
 		Order order = null;
 		try {
-			order = jdcbTemplate.queryForObject(OrderQueries.OrderIdEmail, new Object[] {id, email}, rowMapper);
+			order = jdcbTemplate.queryForObject(OrderQueries.ORDER_ID_EMAIL, new Object[] {id, email}, rowMapper);
 		} catch (DataAccessException ex) {
 			log.info("Order not found");
 		}
@@ -64,7 +64,7 @@ public class OrderService implements OrderDAO {
 	public Optional<Order> getOrder(String email) {
 		Order order = null;
 		try {
-			order = jdcbTemplate.queryForObject(OrderQueries.OrderEmail, new Object[] { email}, rowMapper);
+			order = jdcbTemplate.queryForObject(OrderQueries.ORDER_EMAIL, new Object[] { email}, rowMapper);
 		} catch (DataAccessException ex) {
 			log.info("Order not found");
 		}
@@ -76,7 +76,7 @@ public class OrderService implements OrderDAO {
 	public Optional<Order> getOrder(Long id) {
 		Order order = null;
 		try {
-			order = jdcbTemplate.queryForObject(OrderQueries.OrderId, new Object[] {id}, rowMapper);
+			order = jdcbTemplate.queryForObject(OrderQueries.ORDER_ID, new Object[] {id}, rowMapper);
 		} catch (DataAccessException ex) {
 			log.info("Order not found");
 		}
@@ -91,7 +91,7 @@ public class OrderService implements OrderDAO {
 
 	@Override
 	public void setDelivered(boolean delivered, Long id) {
-		jdcbTemplate.update(OrderQueries.setDelivered, delivered, id);
+		jdcbTemplate.update(OrderQueries.SET_DELIVERED, delivered, id);
 	}
 
 

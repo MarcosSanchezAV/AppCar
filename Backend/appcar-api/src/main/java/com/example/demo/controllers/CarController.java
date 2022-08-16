@@ -10,43 +10,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Dao.DaoImpl.CarDaoImpl;
 import com.example.demo.models.Car;
-import com.example.demo.services.CarService;
 
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
 
 	@Autowired
-	CarService carService;
+	CarDaoImpl carDaoImpl;
 	
 	@GetMapping()
 	public ArrayList<Car> getCars() {
-		return (ArrayList<Car>) carService.getCars();
+		return (ArrayList<Car>) carDaoImpl.getCars();
 	}
 	
 	@GetMapping("/ascendent")
 	public ArrayList<Car> getCars(@RequestParam boolean ascendent) {
-		return (ArrayList<Car>) carService.getCars(ascendent);
+		return (ArrayList<Car>) carDaoImpl.getCars(ascendent);
 	}
 	
 	@GetMapping("/type")
 	public ArrayList<Car> getCars(@RequestParam String type) {
-		return (ArrayList<Car>) carService.getCars(type);
+		return (ArrayList<Car>) carDaoImpl.getCars(type);
 	}
 	
 	@GetMapping("/ascendent/type")
 	public ArrayList<Car> getCars(@RequestParam boolean ascendent, @RequestParam String type) {
-		return (ArrayList<Car>) carService.getCars(ascendent, type);
+		return (ArrayList<Car>) carDaoImpl.getCars(ascendent, type);
 	}
 	
 	@GetMapping("/id")
 	public Optional<Car> getCar(@RequestParam Long id) {
-		return carService.getCar(id);
+		return carDaoImpl.getCar(id);
 	}
 	
 	@PostMapping("/available")
 	public void setAvailable(@RequestParam boolean available, @RequestParam Long id) {
-		carService.setAvailable(available, id);
+		carDaoImpl.setAvailable(available, id);
 	}
 }

@@ -1,4 +1,4 @@
-package com.example.demo.services;
+package com.example.demo.Dao.DaoImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,27 +10,27 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.DAO.CarDAO;
+import com.example.demo.Dao.CarDao;
 import com.example.demo.models.Car;
 import com.example.demo.queries.CarQueries;
 
 @Component
-public class CarService implements CarDAO {
+public class CarDaoImpl implements CarDao {
 	
-	private static final Logger log = LoggerFactory.getLogger(CarService.class);
+	private static final Logger log = LoggerFactory.getLogger(CarDaoImpl.class);
 	private JdbcTemplate jdcbTemplate;
 	
-	public CarService(JdbcTemplate jdcbTemplate) {
+	public CarDaoImpl(JdbcTemplate jdcbTemplate) {
 		this.jdcbTemplate = jdcbTemplate;
 	}
 	
 	RowMapper<Car> rowMapper = (rs, rowNum) -> {
 		Car car = new Car();
 		car.setId(rs.getLong("id"));
-		car.setName_car(rs.getString("name_car"));
+		car.setNameCar(rs.getString("name_car"));
 		car.setPrice(rs.getDouble("price"));
 		car.setImg(rs.getString("img"));
-		car.setType_car(rs.getString("type_car"));
+		car.setTypeCar(rs.getString("type_car"));
 		car.setAvailable(true);
 		return car;
 	};
@@ -38,7 +38,7 @@ public class CarService implements CarDAO {
 	@Override
 	public List<Car> getCars() {
 		
-		return jdcbTemplate.query(CarQueries.allCars, rowMapper);
+		return jdcbTemplate.query(CarQueries.ALL_CARS, rowMapper);
 		
 	}
 
@@ -46,9 +46,9 @@ public class CarService implements CarDAO {
 	public List<Car> getCars(boolean ascendent) {
 		
 		if (ascendent) {
-			return jdcbTemplate.query(CarQueries.CarsAsc, rowMapper);
+			return jdcbTemplate.query(CarQueries.CARS_ASC, rowMapper);
 		} else {
-			return jdcbTemplate.query(CarQueries.CarsDesc, rowMapper);
+			return jdcbTemplate.query(CarQueries.CARS_DESC, rowMapper);
 		}
 		
 	}
@@ -56,7 +56,7 @@ public class CarService implements CarDAO {
 	@Override
 	public List<Car> getCars(String type) {
 		
-		return jdcbTemplate.query(CarQueries.CarsType, rowMapper, type);
+		return jdcbTemplate.query(CarQueries.CARS_TYPE, rowMapper, type);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -64,7 +64,7 @@ public class CarService implements CarDAO {
 	public Optional<Car> getCar(Long id) {
 		Car car = null;
 		try {
-			car = jdcbTemplate.queryForObject(CarQueries.CarId, new Object[]{id}, rowMapper);
+			car = jdcbTemplate.queryForObject(CarQueries.CAR_ID, new Object[]{id}, rowMapper);
 		} catch (DataAccessException ex) {
 			log.info("Car not found");
 		}
@@ -74,15 +74,15 @@ public class CarService implements CarDAO {
 	@Override
 	public List<Car> getCars(boolean ascendent, String type) {
 		if (ascendent) {
-			return jdcbTemplate.query(CarQueries.CarsTypeAsc, rowMapper, type);
+			return jdcbTemplate.query(CarQueries.CARS_TYPE_ASC, rowMapper, type);
 		} else {
-			return jdcbTemplate.query(CarQueries.CarsTypeDesc, rowMapper, type);
+			return jdcbTemplate.query(CarQueries.CARS_TYPE_DESC, rowMapper, type);
 		}
 	}
 
 	@Override
 	public void setAvailable(boolean available, Long id) {
-		jdcbTemplate.update(CarQueries.setAvailable, available, id);
+		jdcbTemplate.update(CarQueries.SET_AVAILABLE, available, id);
 	}
 	
 }
