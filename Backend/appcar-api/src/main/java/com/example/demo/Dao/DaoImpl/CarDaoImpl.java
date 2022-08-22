@@ -26,6 +26,19 @@ public class CarDaoImpl implements CarDao {
 	
 	RowMapper<Car> rowMapper = (rs, rowNum) -> {
 		Car car = new Car();
+		car.setId(rs.getLong("cars.id"));
+		car.setNameCar(rs.getString("name_car"));
+		car.setPrice(rs.getDouble("price"));
+		car.setImg(rs.getString("img"));
+		car.setTypeCar(rs.getString("type_car"));
+		car.setAvailable(true);
+		car.setDateStart(rs.getString("orders.date_start"));
+		car.setDateEnd(rs.getString("orders.date_end"));
+		return car;
+	};
+	
+	RowMapper<Car> rowMapperId = (rs, rowNum) -> {
+		Car car = new Car();
 		car.setId(rs.getLong("id"));
 		car.setNameCar(rs.getString("name_car"));
 		car.setPrice(rs.getDouble("price"));
@@ -34,7 +47,6 @@ public class CarDaoImpl implements CarDao {
 		car.setAvailable(true);
 		return car;
 	};
-	
 	@Override
 	public List<Car> getCars() {
 		
@@ -64,7 +76,7 @@ public class CarDaoImpl implements CarDao {
 	public Optional<Car> getCar(Long id) {
 		Car car = null;
 		try {
-			car = jdcbTemplate.queryForObject(CarQueries.CAR_ID, new Object[]{id}, rowMapper);
+			car = jdcbTemplate.queryForObject(CarQueries.CAR_ID, new Object[]{id}, rowMapperId);
 		} catch (DataAccessException ex) {
 			log.info("Car not found");
 		}

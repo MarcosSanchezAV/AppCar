@@ -89,15 +89,15 @@ public class Order {
 	@Column(name = "id_car")
 	private Long idCar;
 	
+	private int days;
+	
 	@Column(name = "date_start")
-	private String dateStart = LocalDate.now().toString();
+	private String dateStart;
 	
 	@Column(name = "date_end")
-	private String dateEnd = LocalDate.now().plusDays(this.days).toString();;
+	private String dateEnd = LocalDate.parse(dateStart).plusDays(days).toString();
 	
 	private boolean delivered = false;
-	
-	private int days;
 	
 	private double amount;
 	
@@ -124,14 +124,17 @@ public class Order {
 		
 	}
 
-	public Order(Long idCar, int days, double amount, String nameUser, String emailUser) {
+	public Order(Long idCar, int days, String dateStart, double amount, String nameUser, String emailUser) {
+		super();
 		this.idCar = idCar;
-		this.dateEnd = LocalDate.now().plusDays(days).toString();
 		this.days = days;
+		this.dateStart = dateStart;
 		this.amount = amount;
 		this.nameUser = nameUser;
 		this.emailUser = emailUser;
 	}
+
+	
 	
 	
 }

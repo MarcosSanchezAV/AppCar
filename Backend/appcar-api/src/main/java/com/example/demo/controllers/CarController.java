@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -21,8 +22,18 @@ public class CarController {
 	CarDaoImpl carDaoImpl;
 	
 	@GetMapping()
-	public ArrayList<Car> getCars() {
-		return (ArrayList<Car>) carDaoImpl.getCars();
+	public ArrayList<Car> getCars(@RequestParam String dateEnd) {
+		LocalDate end = LocalDate.parse(dateEnd);
+		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars();
+		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
+		for ( Car c : arrayCar) {
+			if (c.getDateStart() == null) {
+				arrayFilterCar.add(c);
+			} else if (LocalDate.parse(c.getDateStart()).isAfter(end)) {
+				arrayFilterCar.add(c);
+			}
+		}
+		return arrayFilterCar;
 	}
 	
 	@GetMapping("/ascendent")
@@ -31,7 +42,7 @@ public class CarController {
 	}
 	
 	@GetMapping("/type")
-	public ArrayList<Car> getCars(@RequestParam String type) {
+	public ArrayList<Car> getCars(@RequestParam String type, @RequestParam String dateEnd) {
 		return (ArrayList<Car>) carDaoImpl.getCars(type);
 	}
 	
