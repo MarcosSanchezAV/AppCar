@@ -23,8 +23,11 @@ public class CarController {
 	
 	@GetMapping()
 	public ArrayList<Car> getCars(@RequestParam String dateEnd) {
-		LocalDate end = LocalDate.parse(dateEnd);
 		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars();
+		if (dateEnd == "") {
+			return arrayCar;
+		} 
+		LocalDate end = LocalDate.parse(dateEnd);
 		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
 		for ( Car c : arrayCar) {
 			if (c.getDateStart() == null) {
@@ -37,18 +40,57 @@ public class CarController {
 	}
 	
 	@GetMapping("/ascendent")
-	public ArrayList<Car> getCars(@RequestParam boolean ascendent) {
-		return (ArrayList<Car>) carDaoImpl.getCars(ascendent);
+	public ArrayList<Car> getCars(@RequestParam boolean ascendent, @RequestParam String dateEnd ) {
+		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars(ascendent);
+		if (dateEnd == "") {
+			return arrayCar;
+		} 
+		LocalDate end = LocalDate.parse(dateEnd);
+		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
+		for ( Car c : arrayCar) {
+			if (c.getDateStart() == null) {
+				arrayFilterCar.add(c);
+			} else if (LocalDate.parse(c.getDateStart()).isAfter(end)) {
+				arrayFilterCar.add(c);
+			}
+		}
+		return arrayFilterCar;
 	}
 	
 	@GetMapping("/type")
 	public ArrayList<Car> getCars(@RequestParam String type, @RequestParam String dateEnd) {
-		return (ArrayList<Car>) carDaoImpl.getCars(type);
+		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars(type);
+		if (dateEnd == "") {
+			return arrayCar;
+		}
+		LocalDate end = LocalDate.parse(dateEnd);
+		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
+		for ( Car c : arrayCar) {
+			if (c.getDateStart() == null) {
+				arrayFilterCar.add(c);
+			} else if (LocalDate.parse(c.getDateStart()).isAfter(end)) {
+				arrayFilterCar.add(c);
+			}
+		}
+		return arrayFilterCar;
 	}
 	
 	@GetMapping("/ascendent/type")
-	public ArrayList<Car> getCars(@RequestParam boolean ascendent, @RequestParam String type) {
-		return (ArrayList<Car>) carDaoImpl.getCars(ascendent, type);
+	public ArrayList<Car> getCars(@RequestParam boolean ascendent, @RequestParam String type, @RequestParam String dateEnd) {
+		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars(ascendent, type);
+		if (dateEnd == "") {
+			return arrayCar;
+		}
+		LocalDate end = LocalDate.parse(dateEnd);
+		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
+		for ( Car c : arrayCar) {
+			if (c.getDateStart() == null) {
+				arrayFilterCar.add(c);
+			} else if (LocalDate.parse(c.getDateStart()).isAfter(end)) {
+				arrayFilterCar.add(c);
+			}
+		}
+		return arrayFilterCar;
 	}
 	
 	@GetMapping("/id")
