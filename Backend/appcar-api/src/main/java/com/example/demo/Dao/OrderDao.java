@@ -20,4 +20,8 @@ public interface OrderDao {
 	Optional<Order> getOrder(Long id);
 	
 	void setDelivered(boolean delivered, Long id);
+	
+	int checkDates(String dateStart, String dateEnd);
+	
+	boolean checkDate(String dateStart);
 }

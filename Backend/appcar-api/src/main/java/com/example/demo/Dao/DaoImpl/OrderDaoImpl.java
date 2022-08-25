@@ -94,6 +94,25 @@ public class OrderDaoImpl implements OrderDao {
 		jdcbTemplate.update(OrderQueries.SET_DELIVERED, delivered, id);
 	}
 
+	@Override
+	public int checkDates(String dateStart, String dateEnd) {
+		LocalDate start = LocalDate.parse(dateStart);
+		LocalDate end = LocalDate.parse(dateEnd);
+		if (start.isAfter(end) || start.isEqual(end)) {
+			return 1;
+		} else if (start.isBefore(LocalDate.now())) {
+			return 2;
+		} else {
+			return 3;
+		}
+	}
+
+	@Override
+	public boolean checkDate(String dateStart) {
+		LocalDate start = LocalDate.parse(dateStart);
+		return !start.isBefore(LocalDate.now());
+	}
+
 
 
 

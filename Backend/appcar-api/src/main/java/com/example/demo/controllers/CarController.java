@@ -24,9 +24,6 @@ public class CarController {
 	@GetMapping()
 	public ArrayList<Car> getCars(@RequestParam String dateEnd) {
 		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars();
-		if (dateEnd == "") {
-			return arrayCar;
-		} 
 		LocalDate end = LocalDate.parse(dateEnd);
 		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
 		for ( Car c : arrayCar) {
@@ -42,9 +39,6 @@ public class CarController {
 	@GetMapping("/ascendent")
 	public ArrayList<Car> getCars(@RequestParam boolean ascendent, @RequestParam String dateEnd ) {
 		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars(ascendent);
-		if (dateEnd == "") {
-			return arrayCar;
-		} 
 		LocalDate end = LocalDate.parse(dateEnd);
 		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
 		for ( Car c : arrayCar) {
@@ -60,9 +54,6 @@ public class CarController {
 	@GetMapping("/type")
 	public ArrayList<Car> getCars(@RequestParam String type, @RequestParam String dateEnd) {
 		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars(type);
-		if (dateEnd == "") {
-			return arrayCar;
-		}
 		LocalDate end = LocalDate.parse(dateEnd);
 		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
 		for ( Car c : arrayCar) {
@@ -78,9 +69,6 @@ public class CarController {
 	@GetMapping("/ascendent/type")
 	public ArrayList<Car> getCars(@RequestParam boolean ascendent, @RequestParam String type, @RequestParam String dateEnd) {
 		ArrayList<Car> arrayCar = (ArrayList<Car>) carDaoImpl.getCars(ascendent, type);
-		if (dateEnd == "") {
-			return arrayCar;
-		}
 		LocalDate end = LocalDate.parse(dateEnd);
 		ArrayList<Car> arrayFilterCar = new ArrayList<Car>();
 		for ( Car c : arrayCar) {

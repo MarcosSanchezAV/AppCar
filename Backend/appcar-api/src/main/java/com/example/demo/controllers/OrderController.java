@@ -50,4 +50,14 @@ public class OrderController {
 		orderDaoImpl.setDelivered(delivered, id);
 	}
 	
+	@GetMapping("/checkDates")
+	public int checkDates(@RequestParam String dateStart, @RequestParam String dateEnd) {
+		return orderDaoImpl.checkDates(dateStart, dateEnd);
+	}
+	
+	@GetMapping("/checkDate")
+	public boolean checkDate(@RequestParam String dateStart) {
+		return orderDaoImpl.checkDate(dateStart);
+	}
+	
 }
